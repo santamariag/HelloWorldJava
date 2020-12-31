@@ -24,6 +24,6 @@ jobs:
     - name: Push the tagged Docker image
       run: docker push shady84/test:${{steps.vars.outputs.tag}}
     - name: Build the latest Docker image
-      run: docker build . --file Dockerfile --tag shady84/test:latest
+      run: docker build . --file docker-git-hello-world/Dockerfile --tag shady84/test:latest
     - name: Push the latest Docker image
       run: docker push shady84/test:latest
