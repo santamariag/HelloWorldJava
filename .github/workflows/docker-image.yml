@@ -1,10 +1,13 @@
 name: Docker Image CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#on:
+#  push:
+#   branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
+on: 
+  release: 
+     types: [published]
 
 jobs:
 
@@ -18,7 +21,7 @@ jobs:
       run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
     - name: Get the version
       id: vars
-      run: echo ::set-output name=tag::1.0
+      run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
     - name: Build the Docker image
       run: docker build . --file docker-git-hello-world/Dockerfile --tag shady84/test:${{steps.vars.outputs.tag}}
     - name: Push the tagged Docker image
